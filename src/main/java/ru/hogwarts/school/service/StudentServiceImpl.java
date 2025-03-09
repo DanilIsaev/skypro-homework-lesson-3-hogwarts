@@ -24,8 +24,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public Student editStudent(Student student) {
-        students.put(student.getId(), student);
-        return student;
+        if (students.containsKey(student.getId())) {
+            students.put(student.getId(), student);
+            return student;
+        }
+        return null;
     }
 
     public Student deleteStudent(Long id) {

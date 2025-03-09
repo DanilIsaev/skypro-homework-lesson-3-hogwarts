@@ -24,8 +24,11 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     public Faculty editFaculty(Faculty faculty) {
-        faculties.put(faculty.getId(), faculty);
-        return faculty;
+        if (faculties.containsKey(faculty.getId())) {
+            faculties.put(faculty.getId(), faculty);
+            return faculty;
+        }
+        return null;
     }
 
     public Faculty deleteFaculty(Long id) {
