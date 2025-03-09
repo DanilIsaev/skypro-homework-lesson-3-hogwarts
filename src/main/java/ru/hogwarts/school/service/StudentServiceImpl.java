@@ -16,6 +16,7 @@ public class StudentServiceImpl implements StudentService {
 
     public Student createStudent(Student student) {
         students.put(++lastId, student);
+        student.setId(lastId);
         return student;
     }
 

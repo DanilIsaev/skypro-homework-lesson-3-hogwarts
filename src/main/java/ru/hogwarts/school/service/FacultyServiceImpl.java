@@ -16,6 +16,7 @@ public class FacultyServiceImpl implements FacultyService {
 
     public Faculty createFaculty(Faculty faculty) {
         faculties.put(++lastId, faculty);
+        faculty.setId(lastId);
         return faculty;
     }
 
