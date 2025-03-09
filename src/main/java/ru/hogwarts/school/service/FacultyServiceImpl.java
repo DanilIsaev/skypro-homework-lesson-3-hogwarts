@@ -15,8 +15,7 @@ public class FacultyServiceImpl implements FacultyService {
     private static Long lastId = 0L;
 
     public Faculty createFaculty(Faculty faculty) {
-        faculties.put(lastId, faculty);
-        lastId++;
+        faculties.put(++lastId, faculty);
         return faculty;
     }
 
@@ -24,7 +23,7 @@ public class FacultyServiceImpl implements FacultyService {
         return faculties.get(lastId);
     }
 
-    private Faculty editFaculty(Faculty faculty) {
+    public Faculty editFaculty(Faculty faculty) {
         faculties.put(faculty.getId(), faculty);
         return faculty;
     }

@@ -15,8 +15,7 @@ public class StudentServiceImpl implements StudentService {
     private static Long lastId = 0L;
 
     public Student createStudent(Student student) {
-        students.put(lastId, student);
-        lastId++;
+        students.put(++lastId, student);
         return student;
     }
 
