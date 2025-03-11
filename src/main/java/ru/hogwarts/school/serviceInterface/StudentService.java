@@ -2,6 +2,8 @@ package ru.hogwarts.school.serviceInterface;
 
 import ru.hogwarts.school.model.Student;
 
+import java.util.Map;
+
 public interface StudentService {
 
     Student createStudent(Student student);
@@ -12,4 +14,5 @@ public interface StudentService {
 
     Student deleteStudent(Long id);
 
+    Map<Long, Student> findStudentsByAge(Long id);
 }

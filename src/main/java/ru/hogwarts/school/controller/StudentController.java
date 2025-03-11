@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.serviceInterface.StudentService;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("student")
 public class StudentController {
@@ -44,5 +46,10 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(studentFound);
+    }
+
+    @GetMapping("/search_age/{age}")
+    public Map<Long,Student> getStudentByAgeList(@PathVariable Long age) {
+        return studentService.findStudentsByAge(age);
     }
 }
