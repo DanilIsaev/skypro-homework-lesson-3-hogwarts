@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.serviceInterface.StudentService;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,14 +43,8 @@ public class StudentServiceImpl implements StudentService {
                 .collect(Collectors.toMap(Student::getId, student -> student));
     }
 
-//    public Map<Long, Student> findListAge(Integer findAge) {
-//        Map<Long, Student> studentsFindAge = new HashMap<>();;
-//        for (Student student : students.values()) {
-//            if (findAge == student.getAge()) {
-//                studentsFindAge.put(student.getId(),student);
-//            }
-//        }
-//        return studentsFindAge;
-//    }
+    public Collection<Student> findByAgeBetween(int min, int max) {
+        return studentRepository.findByAgeBetween(min, max);
+    }
 
 }

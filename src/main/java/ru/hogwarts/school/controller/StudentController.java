@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.serviceInterface.StudentService;
 
+import java.util.Collection;
 import java.util.Map;
 
 @RestController
@@ -47,5 +48,9 @@ public class StudentController {
     @GetMapping("/search_age/{age}")
     public Map<Long,Student> getStudentByAgeList(@PathVariable Long age) {
         return studentService.findStudentsByAge(age);
+    }
+    @GetMapping("/search_age")
+    public Collection<Student> getStudentByAgeBetweenList(@RequestParam int min, @RequestParam int max) {
+        return studentService.findByAgeBetween(min, max);
     }
 }
