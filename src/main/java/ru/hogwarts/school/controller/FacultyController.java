@@ -6,6 +6,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyServiceImpl;
 import ru.hogwarts.school.serviceInterface.FacultyService;
 
+import java.util.Collection;
 import java.util.Map;
 
 @RestController
@@ -46,7 +47,12 @@ public class FacultyController {
     }
 
     @GetMapping("/search_color/{color}")
-    public Map<Long,Faculty> getFacultyByColorList(@PathVariable String color) {
+    public Map<Long, Faculty> getFacultyByColorList(@PathVariable String color) {
         return facultyService.findFacultyByColor(color);
+    }
+
+    @GetMapping("/search_color")
+    public Collection<Faculty> getFacultyByColorListIgnoreCase(@RequestParam String color) {
+        return facultyService.findFacultyByColorIgnoreCase(color);
     }
 }

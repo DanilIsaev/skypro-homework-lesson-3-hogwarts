@@ -6,6 +6,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.serviceInterface.FacultyService;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,5 +45,8 @@ public class FacultyServiceImpl implements FacultyService {
                 .collect(Collectors.toMap(Faculty::getId, faculty -> faculty));
     }
 
+    public Collection<Faculty> findFacultyByColorIgnoreCase(String findColor) {
+        return facultyRepository.findByColorIgnoreCase(findColor);
+    }
 
 }
