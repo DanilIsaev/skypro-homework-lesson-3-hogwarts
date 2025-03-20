@@ -18,4 +18,5 @@ public interface StudentService {
     Map<Long, Student> findStudentsByAge(Long id);
 
     Collection<Student> findByAgeBetween(int min, int max);
+
 }
