@@ -41,14 +41,15 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public void  deleteStudent(@PathVariable Long id) {
+    public void deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
     }
 
     @GetMapping("/search_age/{age}")
-    public Map<Long,Student> getStudentByAgeList(@PathVariable Long age) {
+    public Map<Long, Student> getStudentByAgeList(@PathVariable Long age) {
         return studentService.findStudentsByAge(age);
     }
+
     @GetMapping("/search_age")
     public Collection<Student> getStudentByAgeBetweenList(@RequestParam int min, @RequestParam int max) {
         return studentService.findByAgeBetween(min, max);

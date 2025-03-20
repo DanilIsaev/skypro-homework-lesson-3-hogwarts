@@ -18,4 +18,5 @@ public interface FacultyService {
     Map<Long, Faculty> findFacultyByColor(String color);
 
     Collection<Faculty> findFacultyByColorIgnoreCase(String findColor);
+
 }
