@@ -3,12 +3,11 @@ package ru.hogwarts.school.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.serviceInterface.FacultyService;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Collection;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -20,7 +19,7 @@ public class FacultyServiceImpl implements FacultyService {
         this.facultyRepository = facultyRepository;
     }
 
-    private final Map<Long, Faculty> faculties = new HashMap<>();
+//    private final Map<Long, Faculty> faculties = new HashMap<>();
 
     public Faculty createFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
@@ -38,10 +37,18 @@ public class FacultyServiceImpl implements FacultyService {
         facultyRepository.deleteById(id);
     }
 
-    public Map<Long, Faculty> findFacultyByColor(String findColor) {
-        return faculties.values().stream()
-                .filter(faculty -> faculty.getColor().equals(findColor))
-                .collect(Collectors.toMap(Faculty::getId, faculty -> faculty));
+//    public Map<Long, Faculty> findFacultyByColor(String findColor) {
+//        return faculties.values().stream()
+//                .filter(faculty -> faculty.getColor().equals(findColor))
+//                .collect(Collectors.toMap(Faculty::getId, faculty -> faculty));
+//    }
+
+    public Collection<Faculty> findFacultyByColorIgnoreCase(String findColor) {
+        return facultyRepository.findByColorIgnoreCase(findColor);
+    }
+
+    public Collection<Student> findStudentsByFacultyId(Long facultyId) {
+       return facultyRepository.findById(facultyId).get().getStudents();
     }
 
 
