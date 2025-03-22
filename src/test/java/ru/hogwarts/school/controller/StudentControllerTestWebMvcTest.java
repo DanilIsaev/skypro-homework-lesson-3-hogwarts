@@ -2,8 +2,6 @@ package ru.hogwarts.school.controller;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class StudentControllerTestWebMvcTest {
 
     @Test
@@ -11,11 +9,11 @@ class StudentControllerTestWebMvcTest {
     }
 
     @Test
-    void findFacultyByStudent() {
+    void createStudent() {
     }
 
     @Test
-    void createStudent() {
+    void findFacultyByStudent() {
     }
 
     @Test
