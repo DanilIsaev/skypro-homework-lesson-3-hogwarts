@@ -38,7 +38,6 @@ class FacultyControllerTestWebMvcTest {
     @InjectMocks
     private FacultyController facultyController;
 
-
     @Test
     void getFaculty() throws Exception {
         Faculty faculty = new Faculty();

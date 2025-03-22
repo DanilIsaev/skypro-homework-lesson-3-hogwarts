@@ -7,9 +7,6 @@ import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.serviceInterface.StudentService;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -21,7 +18,7 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository = studentRepository;
     }
 
-    private final Map<Long, Student> students = new HashMap<>();
+//    private final Map<Long, Student> students = new HashMap<>();
 
     public Student createStudent(Student student) {
         return studentRepository.save(student);
@@ -39,19 +36,20 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.deleteById(id);
     }
 
-    public Map<Long, Student> findStudentsByAge(Long targetAge) {
-        return students.values().stream()
-                .filter(student -> student.getAge() == targetAge)
-                .collect(Collectors.toMap(Student::getId, student -> student));
+
+    public Faculty findFacultyByStudent(Long id) {
+        return studentRepository.findById(id).get().getFaculty();
     }
 
     public Collection<Student> findByAgeBetween(int min, int max) {
         return studentRepository.findByAgeBetween(min, max);
     }
 
-    public Faculty findFacultyByStudent(Long id) {
-        return studentRepository.findById(id).get().getFaculty();
-    }
+//        public Map<Long, Student> findStudentsByAge(Long targetAge) {
+//        return students.values().stream()
+//                .filter(student -> student.getAge() == targetAge)
+//                .collect(Collectors.toMap(Student::getId, student -> student));
+//    }
 
 
 }
