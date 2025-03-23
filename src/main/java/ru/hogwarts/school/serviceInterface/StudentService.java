@@ -4,7 +4,6 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
-import java.util.Map;
 
 public interface StudentService {
 
@@ -16,7 +15,7 @@ public interface StudentService {
 
     void deleteStudent(Long id);
 
-    Map<Long, Student> findStudentsByAge(Long id);
+//    Map<Long, Student> findStudentsByAge(Long id);
 
     Collection<Student> findByAgeBetween(int min, int max);
 

@@ -43,12 +43,12 @@ public class FacultyServiceImpl implements FacultyService {
 //                .collect(Collectors.toMap(Faculty::getId, faculty -> faculty));
 //    }
 
-    public Collection<Faculty> findFacultyByColorIgnoreCase(String findColor) {
-        return facultyRepository.findByColorIgnoreCase(findColor);
+    public Collection<Student> findStudentsByFacultyId(Long facultyId) {
+        return facultyRepository.findById(facultyId).get().getStudents();
     }
 
-    public Collection<Student> findStudentsByFacultyId(Long facultyId) {
-       return facultyRepository.findById(facultyId).get().getStudents();
+    public Collection<Faculty> findFacultyByColorIgnoreCase(String findColor) {
+        return facultyRepository.findByColorIgnoreCase(findColor);
     }
 
 
