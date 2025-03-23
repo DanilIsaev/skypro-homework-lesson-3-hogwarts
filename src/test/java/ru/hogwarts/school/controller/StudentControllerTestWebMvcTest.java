@@ -15,9 +15,12 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentServiceImpl;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -162,9 +165,9 @@ class StudentControllerTestWebMvcTest {
         when(studentRepository.save(any(Student.class))).thenReturn(student);
 
         mockMvc.perform(MockMvcRequestBuilders
-                .put("/student")
-                .content(studentJson.toString())
-                .contentType(MediaType.APPLICATION_JSON))
+                        .put("/student")
+                        .content(studentJson.toString())
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(studentId))
                 .andExpect(jsonPath("$.name").value(studentName))
@@ -182,6 +185,38 @@ class StudentControllerTestWebMvcTest {
     }
 
     @Test
-    void getStudentByAgeBetweenList() {
+    void getStudentByAgeBetweenList() throws Exception {
+        Long studentId = 1L;
+        String studentName = "test";
+        int studentAge = 20;
+
+        Faculty faculty = new Faculty();
+        faculty.setId(1L);
+        faculty.setName("Slizering");
+        faculty.setColor("Green");
+
+        Student student = new Student();
+        student.setId(studentId);
+        student.setName(studentName);
+        student.setAge(studentAge);
+        student.setFaculty(faculty);
+
+        Collection<Student> studentsCollection = new ArrayList<>();
+        studentsCollection.add(student);
+
+        when(studentRepository.findByAgeBetween(anyInt(), anyInt())).thenReturn(studentsCollection);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student")
+                        .param("min", "2")
+                        .param("max", "20"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(studentId))
+                .andExpect(jsonPath("$[0].name").value(studentName))
+                .andExpect(jsonPath("$[0].age").value(studentAge))
+                .andExpect(jsonPath("$[0].faculty.id").value(faculty.getId()))
+                .andExpect(jsonPath("$[0].faculty.name").value(faculty.getName()))
+                .andExpect(jsonPath("$[0].faculty.color").value(faculty.getColor()));
+
     }
 }
