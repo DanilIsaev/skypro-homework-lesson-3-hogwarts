@@ -21,6 +21,7 @@ public class Avatar {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "student", fetch = FetchType.EAGER)
     private Student student;
 
+
     public Long getId() {
         return id;
     }

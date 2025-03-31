@@ -23,7 +23,7 @@ public class AvatarController {
         if (cover.getSize() > 1024 * 30) {
             return ResponseEntity.badRequest().body("File is too big");
         }
-        avatarService.uploadFile(id, cover);
+        avatarService.uploadAvatar(id, cover);
         return ResponseEntity.ok().body("File uploaded");
     }
 
