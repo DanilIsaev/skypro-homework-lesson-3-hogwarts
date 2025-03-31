@@ -10,12 +10,12 @@ import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.serviceInterface.AvatarService;
 import ru.hogwarts.school.serviceInterface.StudentService;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
-import static org.apache.commons.lang3.StringUtils.substring;
+import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 @Transactional
@@ -39,7 +39,13 @@ public class AvatarServiceImpl implements AvatarService {
         Files.createDirectories(filePath.getParent()); // Проверяет есть ли необходимые директории для файла
         Files.deleteIfExists(filePath); // Проверяет наличие на файла и в случае, если файл существует удаляет его предыдущий экземпляр
 
+        try (InputStream is = file.getInputStream(); // Входной поток для считывания
+             OutputStream os = Files.newOutputStream(filePath, CREATE_NEW); // Создаем пустой файл для записи в выходнодном потоке
+             BufferedInputStream bis = new BufferedInputStream(is, 1024); // Размер входного потока
+             BufferedOutputStream bos = new BufferedOutputStream(os, 1024); // Размер выходного потока
+        ) {
 
+        }
     }
 
     private String getException(String fileName) {
