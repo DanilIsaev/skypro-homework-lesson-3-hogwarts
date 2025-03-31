@@ -15,10 +15,12 @@ public class Avatar {
     private long fileSize;
 
     private String mediaType;
+
     @Lob
+    @Column(name = "data", columnDefinition = "oid")
     private byte[] data;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "student", fetch = FetchType.EAGER)
+    @OneToOne
     private Student student;
 
 

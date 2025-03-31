@@ -77,7 +77,7 @@ public class AvatarServiceImpl implements AvatarService {
         }
     }
 
-    private Avatar findAvatar(Long id) {
+    public Avatar findAvatar(Long id) {
         return avatarRepository.findByStudent_Id(id).orElse(new Avatar());
     }
 
