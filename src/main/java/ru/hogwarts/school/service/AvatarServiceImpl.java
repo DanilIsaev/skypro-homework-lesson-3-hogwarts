@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,29 +17,34 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
+
     @Value("${avatar.cover.dir.path}")
     private String coversDir;
 
     private AvatarService avatarService;
+
+    @Autowired
     private AvatarRepository avatarRepository;
+
     private final StudentService studentService;
 
     public AvatarServiceImpl(StudentService studentService) {
         this.studentService = studentService;
     }
 
+
+
     @Override
     public void uploadAvatar(Long id, MultipartFile file) throws IOException {
         Student student = studentService.findStudent(id);
 
-        Path filePath = Path.of(coversDir, id + "." + getException(Objects.requireNonNull(file.getOriginalFilename())));
+        Path filePath = Path.of(coversDir, id + "." + getException(file.getOriginalFilename()));
         Files.createDirectories(filePath.getParent()); // Проверяет есть ли необходимые директории для файла
         Files.deleteIfExists(filePath); // Проверяет наличие файла и в случае, если файл существует, то удаляет его предыдущий экземпляр
 
@@ -52,7 +58,7 @@ public class AvatarServiceImpl implements AvatarService {
 
         Avatar avatar = findAvatar(id);
         avatar.setStudent(student);
-        avatar.setFilePath(file.toString());
+        avatar.setFilePath(filePath.toString());
         avatar.setFileSize(file.getSize());
         avatar.setMediaType(file.getContentType());
         avatar.setData(generateImagePreview(filePath));
@@ -66,7 +72,7 @@ public class AvatarServiceImpl implements AvatarService {
              ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
             BufferedImage image = ImageIO.read(bis);
 
-            int height = image.getHeight() / (image.getWidth() * 100);
+            int height = image.getHeight() / (image.getWidth() / 100);
             BufferedImage preview = new BufferedImage(100, height, image.getType());
             Graphics2D g = preview.createGraphics();
             g.drawImage(image, 0, 0, 100, height, null);
@@ -77,8 +83,9 @@ public class AvatarServiceImpl implements AvatarService {
         }
     }
 
-    public Avatar findAvatar(Long id) {
-        return avatarRepository.findByStudent_Id(id).orElse(new Avatar());
+    public Avatar findAvatar(Long studentId) {
+        return avatarRepository.findByStudent_Id(studentId).orElse(new Avatar());
+
     }
 
     private String getException(String fileName) {

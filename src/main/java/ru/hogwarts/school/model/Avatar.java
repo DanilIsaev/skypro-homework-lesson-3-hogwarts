@@ -16,11 +16,13 @@ public class Avatar {
 
     private String mediaType;
 
+
+    @Column(columnDefinition = "oid")
     @Lob
-    @Column(name = "data", columnDefinition = "oid")
     private byte[] data;
 
-    @OneToOne
+    @OneToOne()
+    @JoinColumn(name = "student_id")
     private Student student;
 
 
