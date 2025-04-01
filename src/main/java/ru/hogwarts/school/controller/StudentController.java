@@ -69,4 +69,9 @@ public class StudentController {
         return studentService.countOfStudentInSchool();
     }
 
+    @GetMapping("/average_age")
+    public Double averageAgeOfStudentInSchool() {
+        return studentService.averageAgeOfStudent();
+    }
+
 }

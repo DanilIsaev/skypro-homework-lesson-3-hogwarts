@@ -23,4 +23,6 @@ public interface StudentService {
 
     Integer countOfStudentInSchool();
 
+    Double averageAgeOfStudent();
+
 }
