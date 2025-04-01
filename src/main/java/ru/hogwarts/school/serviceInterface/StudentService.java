@@ -25,4 +25,6 @@ public interface StudentService {
 
     Double averageAgeOfStudent();
 
+    Collection<Student> getLastFiveStudents();
+
 }
