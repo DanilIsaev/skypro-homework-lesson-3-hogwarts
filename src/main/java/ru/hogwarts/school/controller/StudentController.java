@@ -64,4 +64,9 @@ public class StudentController {
         return studentService.findByAgeBetween(min, max);
     }
 
+    @GetMapping("/count")
+    public Integer countOfStudentInSchool() {
+        return studentService.countOfStudentInSchool();
+    }
+
 }
