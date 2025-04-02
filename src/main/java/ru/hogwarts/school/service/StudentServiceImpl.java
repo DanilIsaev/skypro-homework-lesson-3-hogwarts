@@ -10,6 +10,8 @@ import ru.hogwarts.school.serviceInterface.StudentService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 
@@ -93,6 +95,34 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findByAgeBetween(min, max);
     }
 
+    public String printNamesParallel() throws ExecutionException, InterruptedException {
+        List<Student> students = studentRepository.findAll();
+
+        if (students.size() < 6) {
+            return "Need at least 6 students for this demo";
+        }
+
+        // Основной поток - первые два имени
+        System.out.println("Main Thread: " + students.get(0).getName());
+        System.out.println("Main Thread: " + students.get(1).getName());
+
+        // Параллельный поток 1 - третий и четвертый студент
+        CompletableFuture<Void> thread1 = CompletableFuture.runAsync(() -> {
+            System.out.println("Parallel Thread 1: " + students.get(2).getName());
+            System.out.println("Parallel Thread 1: " + students.get(3).getName());
+        });
+
+        // Параллельный поток 2 - пятый и шестой студент
+        CompletableFuture<Void> thread2 = CompletableFuture.runAsync(() -> {
+            System.out.println("Parallel Thread 2: " + students.get(4).getName());
+            System.out.println("Parallel Thread 2: " + students.get(5).getName());
+        });
+
+        // Ожидаем завершения всех потоков
+        CompletableFuture.allOf(thread1, thread2).get();
+
+        return "Check console for parallel output";
+    }
 //        public Map<Long, Student> findStudentsByAge(Long targetAge) {
 //        return students.values().stream()
 //                .filter(student -> student.getAge() == targetAge)

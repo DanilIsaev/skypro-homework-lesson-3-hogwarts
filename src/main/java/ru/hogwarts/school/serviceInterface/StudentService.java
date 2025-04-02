@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public interface StudentService {
 
@@ -31,5 +32,7 @@ public interface StudentService {
     List<String> getListOfStudentsOnA();
 
     Double getAverageAge();
+
+    String printNamesParallel() throws ExecutionException, InterruptedException;
 
 }
