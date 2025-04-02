@@ -123,6 +123,36 @@ public class StudentServiceImpl implements StudentService {
 
         return "Check console for parallel output";
     }
+
+    private synchronized void printStudentName(String prefix, String name) {
+        System.out.println(prefix + ": " + name);
+    }
+
+    public String printNamesSynchronized() {
+        List<Student> students = studentRepository.findAll();
+
+        if (students.size() < 6) {
+            return "Need at least 6 students for this demo";
+        }
+
+        // Основной поток - первые два имени
+        printStudentName("Main Thread", students.get(0).getName());
+        printStudentName("Main Thread", students.get(1).getName());
+
+        // Параллельный поток 1 - третий и четвертый студент
+        CompletableFuture.runAsync(() -> {
+            printStudentName("Parallel Thread 1", students.get(2).getName());
+            printStudentName("Parallel Thread 1", students.get(3).getName());
+        });
+
+        // Параллельный поток 2 - пятый и шестой студент
+        CompletableFuture.runAsync(() -> {
+            printStudentName("Parallel Thread 2", students.get(4).getName());
+            printStudentName("Parallel Thread 2", students.get(5).getName());
+        });
+
+        return "Check console for synchronized output (order may vary)";
+    }
 //        public Map<Long, Student> findStudentsByAge(Long targetAge) {
 //        return students.values().stream()
 //                .filter(student -> student.getAge() == targetAge)

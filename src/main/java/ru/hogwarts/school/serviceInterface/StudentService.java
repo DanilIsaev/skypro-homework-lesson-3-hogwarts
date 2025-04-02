@@ -35,4 +35,6 @@ public interface StudentService {
 
     String printNamesParallel() throws ExecutionException, InterruptedException;
 
+    String printNamesSynchronized();
+
 }
