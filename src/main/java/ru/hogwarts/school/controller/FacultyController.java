@@ -58,6 +58,11 @@ public class FacultyController {
         return facultyService.findFacultyByColorIgnoreCase(color);
     }
 
+    @GetMapping("/longest-name")
+    public Faculty getFacultyWithLongestName() {
+        return facultyService.getFacultyWithLongestName();
+    }
+
 //    @GetMapping("/search_color/{color}")
 //    public Map<Long, Faculty> getFacultyByColorList(@PathVariable String color) {
 //        return facultyService.findFacultyByColor(color);
