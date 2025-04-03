@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -40,13 +42,18 @@ public class AvatarServiceImpl implements AvatarService {
         this.studentService = studentService;
     }
 
+    Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
+
     @Override
     public void uploadAvatar(Long id, MultipartFile file) throws IOException {
         Student student = studentService.findStudent(id);
 
+        logger.debug("Файл получен");
+
         Path filePath = Path.of(coversDir, id + "." + getException(file.getOriginalFilename()));
         Files.createDirectories(filePath.getParent()); // Проверяет есть ли необходимые директории для файла
         Files.deleteIfExists(filePath); // Проверяет наличие файла и в случае, если файл существует, то удаляет его предыдущий экземпляр
+
 
         try (InputStream is = file.getInputStream(); // Входной поток для считывания
              OutputStream os = Files.newOutputStream(filePath, CREATE_NEW); // Создаем пустой файл для записи в выходном потоке
@@ -64,6 +71,7 @@ public class AvatarServiceImpl implements AvatarService {
         avatar.setData(generateImagePreview(filePath));
 
         avatarRepository.save(avatar);
+        logger.debug("Файл сохранен");
     }
 
     private byte[] generateImagePreview(Path filePath) throws IOException {
@@ -79,6 +87,7 @@ public class AvatarServiceImpl implements AvatarService {
             g.dispose();
 
             ImageIO.write(preview, getException(filePath.getFileName().toString()), bos);
+            logger.debug("Превью для изображения создано");
             return bos.toByteArray();
         }
     }
