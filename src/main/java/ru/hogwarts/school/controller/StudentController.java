@@ -8,6 +8,7 @@ import ru.hogwarts.school.serviceInterface.StudentService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("student")
@@ -90,6 +91,15 @@ public class StudentController {
         return studentService.getAverageAge();
     }
 
+    @GetMapping("/print-parallel")
+    public String printNamesParallel() throws ExecutionException, InterruptedException {
+        return studentService.printNamesParallel();
+    }
+
+    @GetMapping("/print-synchronized")
+    public String printNamesSynchronized() {
+        return studentService.printNamesSynchronized();
+    }
 
 
 
